@@ -1,0 +1,164 @@
+@model BirthGrant.Web.Models.BirthGrantCreateViewModel
+
+@{
+    ViewData["Title"] = "填寫申請資料";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">生育獎勵金申請資料</h2>
+
+    <form asp-action="Create" method="post" class="row g-3">
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-3">
+            <label asp-for="ApplyDate" class="form-label"></label>
+            <input asp-for="ApplyDate" class="form-control" type="date" />
+            <span asp-validation-for="ApplyDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ChildIdNo" class="form-label"></label>
+            <input asp-for="ChildIdNo" class="form-control" />
+            <span asp-validation-for="ChildIdNo" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ChildName" class="form-label"></label>
+            <input asp-for="ChildName" class="form-control" />
+            <span asp-validation-for="ChildName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="BirthDate" class="form-label"></label>
+            <input asp-for="BirthDate" class="form-control" type="date" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-2">
+            <label asp-for="ChildOrder" class="form-label"></label>
+            <input asp-for="ChildOrder" class="form-control" />
+            <span asp-validation-for="ChildOrder" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-5">
+            <label asp-for="ApplicantIdNo" class="form-label"></label>
+            <input asp-for="ApplicantIdNo" class="form-control" />
+            <span asp-validation-for="ApplicantIdNo" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-5">
+            <label asp-for="ApplicantName" class="form-label"></label>
+            <input asp-for="ApplicantName" class="form-control" />
+            <span asp-validation-for="ApplicantName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ApplicantRegisterDate" class="form-label"></label>
+            <input asp-for="ApplicantRegisterDate" class="form-control" type="date" />
+            <span asp-validation-for="ApplicantRegisterDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ApplicantPhone" class="form-label"></label>
+            <input asp-for="ApplicantPhone" class="form-control" />
+            <span asp-validation-for="ApplicantPhone" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="ApplicantAddress" class="form-label"></label>
+            <input asp-for="ApplicantAddress" class="form-control" />
+            <span asp-validation-for="ApplicantAddress" class="text-danger"></span>
+        </div>
+
+        <hr class="mt-4" />
+
+        <div class="col-md-4">
+            <label asp-for="SpouseIdNo" class="form-label"></label>
+            <input asp-for="SpouseIdNo" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="SpouseName" class="form-label"></label>
+            <input asp-for="SpouseName" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="SpouseRegisterDate" class="form-label"></label>
+            <input asp-for="SpouseRegisterDate" class="form-control" type="date" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SpousePhone" class="form-label"></label>
+            <input asp-for="SpousePhone" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SpouseAddress" class="form-label"></label>
+            <input asp-for="SpouseAddress" class="form-control" />
+        </div>
+
+        <hr class="mt-4" />
+
+        <div class="col-md-4">
+            <label asp-for="AgentIdNo" class="form-label"></label>
+            <input asp-for="AgentIdNo" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AgentName" class="form-label"></label>
+            <input asp-for="AgentName" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AgentPhone" class="form-label"></label>
+            <input asp-for="AgentPhone" class="form-control" />
+        </div>
+
+        <hr class="mt-4" />
+
+        <div class="col-md-4">
+            <label asp-for="PayeeName" class="form-label"></label>
+            <input asp-for="PayeeName" class="form-control" />
+            <span asp-validation-for="PayeeName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="PayeePhone" class="form-label"></label>
+            <input asp-for="PayeePhone" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="PaymentMethod" class="form-label"></label>
+            <input asp-for="PaymentMethod" class="form-control" />
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="BankCode" class="form-label"></label>
+            <input asp-for="BankCode" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="BankAccount" class="form-label"></label>
+            <input asp-for="BankAccount" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="GrantAmount" class="form-label"></label>
+            <input asp-for="GrantAmount" class="form-control" />
+            <span asp-validation-for="GrantAmount" class="text-danger"></span>
+        </div>
+
+        <input asp-for="ReceiptOfficePhone" type="hidden" />
+        <input asp-for="ReceiptQrText" type="hidden" />
+
+        <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-success">送出申請</button>
+            <a asp-action="Index" class="btn btn-secondary">返回</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

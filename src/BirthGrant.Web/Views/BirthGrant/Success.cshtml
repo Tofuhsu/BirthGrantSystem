@@ -1,0 +1,16 @@
+@model BirthGrant.Domain.Entities.BirthGrantCase
+
+@{
+    ViewData["Title"] = "申請成功";
+}
+
+<div class="container py-5">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">案件建立成功</h4>
+        <p>案號：<strong>@Model.CaseNo</strong></p>
+        <p>申請日期：@Model.ApplyDate.ToString("yyyy-MM-dd")</p>
+    </div>
+
+    <a class="btn btn-primary" asp-action="Print" asp-route-id="@Model.Id">前往列印申請表</a>
+    <a class="btn btn-outline-secondary" asp-action="Index">回開始頁</a>
+</div>
