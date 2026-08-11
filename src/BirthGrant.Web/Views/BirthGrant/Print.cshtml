@@ -1,237 +1,1013 @@
 @model BirthGrant.Web.Models.BirthGrantPrintViewModel
+
 @{
     Layout = null;
+
     var c = Model.Case;
+
+    var splitIndex = (Model.OfficeContacts.Count + 1) / 2;
+
+    var leftContacts = Model.OfficeContacts
+        .Take(splitIndex)
+        .ToList();
+
+    var rightContacts = Model.OfficeContacts
+        .Skip(splitIndex)
+        .ToList();
 }
 
+ 
+
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>生育獎勵金申請表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @Model.OfficeName 115年度發放生育獎勵金申請表
+    </title>
+
     <style>
         @@page {
             size: A4;
-            margin: 12mm;
+            margin: 10mm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+            color: #000;
+            background: #fff;
+            font-size: 13px;
         }
 
         body {
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
-            margin: 0;
-            color: #000;
+            line-height: 1.45;
         }
 
         .toolbar {
-            padding: 12px;
-            background: #f5f5f5;
-            border-bottom: 1px solid #ccc;
+            width: 210mm;
+            margin: 0 auto 10px auto;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
-        .sheet {
-            width: 100%;
-            page-break-after: always;
-            border: 1px solid #999;
-            padding: 16px;
-            box-sizing: border-box;
-            min-height: 260mm;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .sub-title {
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 16px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .toolbar button,
+        .toolbar a {
+            padding: 8px 18px;
+            border: 1px solid #333;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
             font-size: 14px;
         }
 
-        td {
-            border: 1px solid #333;
-            padding: 6px 8px;
-            vertical-align: top;
+        .toolbar button:hover,
+        .toolbar a:hover {
+            background: #eee;
+        }
+
+        .page {
+            width: 190mm;
+            min-height: 277mm;
+            margin: 0 auto;
+            position: relative;
+            background: #fff;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        .main-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .office-info {
+            border: 1px solid #000;
+            padding: 7px 10px;
+            margin-bottom: 8px;
+            line-height: 1.65;
+        }
+
+        .office-info-row {
+            display: flex;
+        }
+
+        .office-info-label {
+            font-weight: 700;
+            width: 82px;
+        }
+
+        .office-info-value {
+            flex: 1;
+        }
+
+        .form-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .form-table td {
+            border: 1px solid #000;
+            padding: 5px 7px;
+            vertical-align: middle;
+            word-break: break-word;
         }
 
         .label {
-            width: 22%;
+            width: 18%;
+            font-weight: 700;
             background: #fafafa;
-            font-weight: bold;
         }
 
-        .qr-box {
-            width: 120px;
-            height: 120px;
-            border: 1px solid #333;
+        .value {
+            width: 32%;
+        }
+
+        .full-width-label {
+            width: 18%;
+            font-weight: 700;
+            background: #fafafa;
+        }
+
+        .notice {
+            margin-top: 8px;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .notice p {
+            margin: 3px 0;
+        }
+
+        .signature-area {
+            margin-top: 18px;
+        }
+
+        .signature-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            justify-content: space-between;
+            margin-bottom: 26px;
+            min-height: 24px;
         }
 
-        .footer-note {
-            margin-top: 12px;
-            font-size: 13px;
+        .signature-item {
+            width: 48%;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 34px;
+        }
+
+        .qr-section {
+            margin-top: 10px;
+            border: 1px solid #000;
+            display: flex;
+            min-height: 78mm;
+        }
+
+        .qr-info {
+            flex: 1;
+            padding: 12px;
+        }
+
+        .qr-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .query-url {
+            font-size: 14px;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .qr-notice {
+            font-size: 12px;
             line-height: 1.7;
         }
 
-        .sign-line {
+        .qr-container {
+            width: 58mm;
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            font-size: 14px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-left: 1px solid #000;
         }
 
+        .qr-image {
+            width: 38mm;
+            height: 38mm;
+            object-fit: contain;
+        }
+
+        .qr-caption {
+            margin-top: 6px;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .office-directory {
+            border: 1px solid #000;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        .office-directory-title {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 6px;
+            border-bottom: 1px solid #000;
+        }
+
+        .office-directory-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .office-directory-column {
+            padding: 5px 8px;
+        }
+
+        .office-directory-column:first-child {
+            border-right: 1px solid #000;
+        }
+
+        .office-row {
+            display: flex;
+            align-items: baseline;
+            min-height: 21px;
+            font-size: 11.5px;
+            line-height: 1.45;
+        }
+
+        .office-name {
+            width: 47%;
+            white-space: nowrap;
+        }
+
+        .office-phone {
+            width: 53%;
+            white-space: nowrap;
+        }
+
+        .office-note {
+            margin-top: 8px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+
+        .receipt-footer {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+
         @@media print {
-            .toolbar {
-                display: none;
+
+            body {
+                background: #fff;
             }
-            .sheet {
-                border: none;
+
+            .toolbar {
+                display: none !important;
+            }
+
+            .page {
+                width: 190mm;
+                min-height: 277mm;
+                margin: 0;
+                page-break-after: always;
+            }
+
+            .page:last-child {
+                page-break-after: auto;
             }
         }
     </style>
 </head>
+
 <body>
+
     <div class="toolbar">
-        <button onclick="window.print()">列印</button>
-        <a href="/BirthGrant/Index">返回開始頁</a>
+        <button type="button" onclick="window.print()">
+            列印申請表
+        </button>
+
+        <a href="@Url.Action("Success", "BirthGrant", new { id = c.Id })">
+            返回
+        </a>
     </div>
 
-    <div class="sheet">
-        <div class="title">新北市○○戶政事務所115年度發放生育獎勵金申請表</div>
-        <div class="sub-title">戶政事務所存根聯</div>
 
-        <table>
-            <tr>
-                <td class="label">案號</td>
-                <td>@c.CaseNo</td>
-                <td class="label">申請日期</td>
-                <td>@c.ApplyDate.ToString("yyyy-MM-dd")</td>
-            </tr>
-            <tr>
-                <td class="label">新生兒身分證字號</td>
-                <td>@c.ChildIdNo</td>
-                <td class="label">新生兒姓名</td>
-                <td>@c.ChildName</td>
-            </tr>
-            <tr>
-                <td class="label">設籍人身分證字號</td>
-                <td>@c.ApplicantIdNo</td>
-                <td class="label">設籍人姓名</td>
-                <td>@c.ApplicantName</td>
-            </tr>
-            <tr>
-                <td class="label">設籍人電話</td>
-                <td>@c.ApplicantPhone</td>
-                <td class="label">設籍日期</td>
-                <td>@(c.ApplicantRegisterDate?.ToString("yyyy-MM-dd") ?? "")</td>
-            </tr>
-            <tr>
-                <td class="label">戶籍地址</td>
-                <td colspan="3">@c.ApplicantAddress</td>
-            </tr>
-            <tr>
-                <td class="label">配偶資料</td>
-                <td colspan="3">@c.SpouseName @c.SpouseIdNo</td>
-            </tr>
-            <tr>
-                <td class="label">受託人資料</td>
-                <td colspan="3">@c.AgentName @c.AgentIdNo</td>
-            </tr>
-            <tr>
-                <td class="label">受款人</td>
-                <td>@c.PayeeName</td>
-                <td class="label">領取方式</td>
-                <td>@c.PaymentMethod</td>
-            </tr>
-            <tr>
-                <td class="label">金融行庫代碼</td>
-                <td>@c.BankCode</td>
-                <td class="label">金融帳號</td>
-                <td>@c.BankAccount</td>
-            </tr>
-            <tr>
-                <td class="label">核發金額</td>
-                <td>@c.GrantAmount</td>
-                <td class="label">收件人</td>
-                <td>System</td>
-            </tr>
-        </table>
+    <section class="page page-break">
 
-        <div class="footer-note">
-            ※ 本申請資料如有虛報不實，申請人願負一切法律責任。<br />
-            ※ 因申請生育獎勵金，申請人同意提供個人資料供審核使用。
+        <div class="main-title">
+            @Model.OfficeName 115年度發放生育獎勵金申請表
         </div>
 
-        <div class="sign-line">
-            <div>申請人(簽名或蓋章)：____________</div>
-            <div>受託人(簽名或蓋章)：____________</div>
+        <div class="section-title">
+            戶政事務所存根聯
         </div>
-    </div>
 
-    <div class="sheet">
-        <div class="title">新北市○○戶政事務所115年度發放生育獎勵金申請表</div>
-        <div class="sub-title">申請者收執聯</div>
+        <div class="office-info">
 
-        <table>
-            <tr>
-                <td class="label">案號</td>
-                <td>@c.CaseNo</td>
-                <td class="label">申請日期</td>
-                <td>@c.ApplyDate.ToString("yyyy-MM-dd")</td>
-            </tr>
-            <tr>
-                <td class="label">新生兒姓名</td>
-                <td>@c.ChildName</td>
-                <td class="label">子女數</td>
-                <td>第 @c.ChildOrder 名</td>
-            </tr>
-            <tr>
-                <td class="label">設籍人姓名</td>
-                <td>@c.ApplicantName</td>
-                <td class="label">設籍人電話</td>
-                <td>@c.ApplicantPhone</td>
-            </tr>
-            <tr>
-                <td class="label">核發金額</td>
-                <td>@c.GrantAmount</td>
-                <td class="label">收執聯電話</td>
-                <td>@c.ReceiptOfficePhone</td>
-            </tr>
-        </table>
-
-        <div style="display:flex; gap:20px; margin-top:20px; align-items:flex-start;">
-            <div style="flex:1;">
-                <div style="font-weight:bold; margin-bottom:8px;">申辦進度查詢網址</div>
-                <div>@c.ReceiptQrText</div>
-            </div>
-            <div style="width:160px; text-align:center;">
-                <div class="qr-box">
-                    <img src="data:image/png;base64,@Model.QrCodeBase64" alt="QR Code" style="width:120px;height:120px;" />
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    戶政事務所：
                 </div>
-                <div style="margin-top:6px; font-size:12px;">QR Code</div>
+
+                <div class="office-info-value">
+                    @Model.OfficeName
+                </div>
             </div>
+
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    地址：
+                </div>
+
+                <div class="office-info-value">
+                    @Model.OfficeAddress
+                </div>
+            </div>
+
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    電話：
+                </div>
+
+                <div class="office-info-value">
+                    @Model.OfficePhone
+                </div>
+            </div>
+
         </div>
 
-        <div class="footer-note">
-            ※ 申請人可憑此收執聯查詢案件進度。<br />
-            ※ 如有需要補件或查詢，請洽上方電話。
+        <table class="form-table">
+
+            <tr>
+                <td class="label">
+                    案號
+                </td>
+
+                <td class="value">
+                    @c.CaseNo
+                </td>
+
+                <td class="label">
+                    申請日期
+                </td>
+
+                <td class="value">
+                    @Model.ApplyDateRoc
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    新生兒身分證字號
+                </td>
+
+                <td class="value">
+                    @c.ChildIdNo
+                </td>
+
+                <td class="label">
+                    新生兒出生日期
+                </td>
+
+                <td class="value">
+                    @Model.BirthDateRoc
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    新生兒姓名
+                </td>
+
+                <td class="value">
+                    @c.ChildName
+                </td>
+
+                <td class="label">
+                    第幾名子女
+                </td>
+
+                <td class="value">
+                    第 @c.ChildOrder 名
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    設籍人身分證字號
+                </td>
+
+                <td class="value">
+                    @c.ApplicantIdNo
+                </td>
+
+                <td class="label">
+                    設籍人姓名
+                </td>
+
+                <td class="value">
+                    @c.ApplicantName
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    設籍人設籍日期
+                </td>
+
+                <td class="value">
+                    @Model.ApplicantRegisterDateRoc
+                </td>
+
+                <td class="label">
+                    設籍人連絡電話
+                </td>
+
+                <td class="value">
+                    @c.ApplicantPhone
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    設籍人戶籍地址
+                </td>
+
+                <td colspan="3">
+                    @c.ApplicantAddress
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    配偶身分證字號
+                </td>
+
+                <td class="value">
+                    @c.SpouseIdNo
+                </td>
+
+                <td class="label">
+                    配偶姓名
+                </td>
+
+                <td class="value">
+                    @c.SpouseName
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    配偶設籍日期
+                </td>
+
+                <td class="value">
+                    @Model.SpouseRegisterDateRoc
+                </td>
+
+                <td class="label">
+                    配偶連絡電話
+                </td>
+
+                <td class="value">
+                    @c.SpousePhone
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    配偶戶籍地址
+                </td>
+
+                <td colspan="3">
+                    @c.SpouseAddress
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    受託人身分證字號
+                </td>
+
+                <td class="value">
+                    @c.AgentIdNo
+                </td>
+
+                <td class="label">
+                    受託人姓名
+                </td>
+
+                <td class="value">
+                    @c.AgentName
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    受託人連絡電話
+                </td>
+
+                <td class="value">
+                    @c.AgentPhone
+                </td>
+
+                <td class="label">
+                    受款人姓名
+                </td>
+
+                <td class="value">
+                    @c.PayeeName
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    受款人連絡電話
+                </td>
+
+                <td class="value">
+                    @c.PayeePhone
+                </td>
+
+                <td class="label">
+                    領取方式
+                </td>
+
+                <td class="value">
+                    @c.PaymentMethod
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    金融行庫代碼
+                </td>
+
+                <td class="value">
+                    @c.BankCode
+                </td>
+
+                <td class="label">
+                    金融帳號
+                </td>
+
+                <td class="value">
+                    @c.BankAccount
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    核發金額
+                </td>
+
+                <td class="value">
+                    @c.GrantAmount.ToString("N0") 元
+                </td>
+
+                <td class="label">
+                    案件狀態
+                </td>
+
+                <td class="value">
+                    @c.Status
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="notice">
+
+            <p>
+                ※ 本人向新北市政府申領生育獎勵金，申請資料如有虛報不實，
+                經查明者，除無條件繳回生育獎勵金外，並願負一切法律責任，
+                特立此切結書為證。
+            </p>
+
+            <p>
+                ※ 因申請生育獎勵金，本人願提供個人資料
+                （含歷次遷徙紀錄）作為審核資格使用。
+            </p>
+
         </div>
 
-        <div class="sign-line">
-            <div>申請人(簽名或蓋章)：____________</div>
-            <div>收件人：____________</div>
+
+        <div style="margin-top: 18px;">
+            此致　新北市政府
         </div>
-    </div>
+
+        <div class="signature-area">
+
+            <div class="signature-row">
+
+                <div class="signature-item">
+                    申請人（簽名或蓋章）：
+                    ____________________
+                </div>
+
+                <div class="signature-item">
+                    受託人（簽名或蓋章）：
+                    ____________________
+                </div>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <div>
+                    收件日期：
+                    民國　_____　年　_____　月　_____　日
+                </div>
+
+                <div>
+                    收件人：
+                    ____________________
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="page">
+
+        <div class="main-title">
+            @Model.OfficeName 115年度發放生育獎勵金申請表
+        </div>
+
+        <div class="section-title">
+            申請者收執聯
+        </div>
+
+
+        <!-- 戶所資料 -->
+
+        <div class="office-info">
+
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    戶政事務所：
+                </div>
+
+                <div class="office-info-value">
+                    @Model.OfficeName
+                </div>
+            </div>
+
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    地址：
+                </div>
+
+                <div class="office-info-value">
+                    @Model.OfficeAddress
+                </div>
+            </div>
+
+            <div class="office-info-row">
+                <div class="office-info-label">
+                    電話：
+                </div>
+
+                <div class="office-info-value">
+                    @Model.OfficePhone
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- 收執聯主要資料 -->
+
+        <table class="form-table">
+
+            <tr>
+                <td class="label">
+                    案號
+                </td>
+
+                <td class="value">
+                    @c.CaseNo
+                </td>
+
+                <td class="label">
+                    申請日期
+                </td>
+
+                <td class="value">
+                    @Model.ApplyDateRoc
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    新生兒身分證字號
+                </td>
+
+                <td class="value">
+                    @c.ChildIdNo
+                </td>
+
+                <td class="label">
+                    新生兒出生日期
+                </td>
+
+                <td class="value">
+                    @Model.BirthDateRoc
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    新生兒姓名
+                </td>
+
+                <td class="value">
+                    @c.ChildName
+                </td>
+
+                <td class="label">
+                    子女數
+                </td>
+
+                <td class="value">
+                    第 @c.ChildOrder 名
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    設籍人姓名
+                </td>
+
+                <td class="value">
+                    @c.ApplicantName
+                </td>
+
+                <td class="label">
+                    設籍人連絡電話
+                </td>
+
+                <td class="value">
+                    @c.ApplicantPhone
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    設籍人戶籍地址
+                </td>
+
+                <td colspan="3">
+                    @c.ApplicantAddress
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    核發金額
+                </td>
+
+                <td class="value">
+                    @c.GrantAmount.ToString("N0") 元
+                </td>
+
+                <td class="label">
+                    領取方式
+                </td>
+
+                <td class="value">
+                    @c.PaymentMethod
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="label">
+                    金融行庫代碼
+                </td>
+
+                <td class="value">
+                    @c.BankCode
+                </td>
+
+                <td class="label">
+                    金融帳號
+                </td>
+
+                <td class="value">
+                    @c.BankAccount
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="qr-section">
+
+            <div class="qr-info">
+
+                <div class="qr-title">
+                    申辦進度查詢網址
+                </div>
+
+                <div class="query-url">
+                    @Model.QueryUrl
+                </div>
+
+                <div class="qr-notice">
+
+                    <div>
+                        ※ 申請人可憑此收執聯查詢案件進度。
+                    </div>
+
+                    <div>
+                        ※ 如有需要補件或查詢，請洽戶政事務所。
+                    </div>
+
+                    <div style="margin-top: 8px;">
+                        <strong>戶政事務所：</strong>
+                        @Model.OfficeName
+                    </div>
+
+                    <div>
+                        <strong>地址：</strong>
+                        @Model.OfficeAddress
+                    </div>
+
+                    <div>
+                        <strong>電話：</strong>
+                        @Model.OfficePhone
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="qr-container">
+
+                <img
+                    src="data:image/png;base64,@Model.QrCodeBase64"
+                    class="qr-image"
+                    alt="申辦進度查詢 QR Code" />
+
+                <div class="qr-caption">
+                    掃描 QR Code<br />
+                    查詢申辦進度
+                </div>
+
+                <div class="qr-caption">
+                    @Model.OfficePhone
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="office-directory">
+
+            <div class="office-directory-title">
+                新北市各戶政事務所聯絡電話
+            </div>
+
+
+            <div class="office-directory-columns">
+
+                <!-- 左欄 -->
+
+                <div class="office-directory-column">
+
+                    @foreach (var office in leftContacts)
+                    {
+                        <div class="office-row">
+
+                            <div class="office-name">
+                                @office.OfficeName
+                            </div>
+
+                            <div class="office-phone">
+                                @office.Phone
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+                <div class="office-directory-column">
+
+                    @foreach (var office in rightContacts)
+                    {
+                        <div class="office-row">
+
+                            <div class="office-name">
+                                @office.OfficeName
+                            </div>
+
+                            <div class="office-phone">
+                                @office.Phone
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="office-note">
+
+            ※ 如戶政事務所名稱、地址或電話有異動，
+            請依新北市政府民政局網站最新公告為準。
+
+        </div>
+
+
+        <!-- 收執聯簽章 / 收件 -->
+
+        <div class="receipt-footer">
+
+            <div>
+                收執聯
+            </div>
+
+            <div>
+                收件日期：
+                ____________
+            </div>
+
+            <div>
+                收件人：
+                ____________
+            </div>
+
+        </div>
+
+    </section>
+
 </body>
 </html>

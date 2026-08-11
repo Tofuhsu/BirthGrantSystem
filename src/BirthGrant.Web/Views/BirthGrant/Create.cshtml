@@ -5,160 +5,578 @@
 }
 
 <div class="container py-4">
-    <h2 class="mb-4">生育獎勵金申請資料</h2>
 
-    <form asp-action="Create" method="post" class="row g-3">
+    <div class="mb-4">
+        <h2>生育獎勵金申請資料</h2>
+        <p class="text-muted">
+            請依照申請資料填寫，欄位格式請參考輸入框內的提示。
+        </p>
+    </div>
+
+    <form asp-action="Create" method="post">
+
         @Html.AntiForgeryToken()
 
-        <div class="col-md-3">
-            <label asp-for="ApplyDate" class="form-label"></label>
-            <input asp-for="ApplyDate" class="form-control" type="date" />
-            <span asp-validation-for="ApplyDate" class="text-danger"></span>
+        <div asp-validation-summary="All"
+             class="text-danger mb-4">
         </div>
 
-        <div class="col-md-3">
-            <label asp-for="ChildIdNo" class="form-label"></label>
-            <input asp-for="ChildIdNo" class="form-control" />
-            <span asp-validation-for="ChildIdNo" class="text-danger"></span>
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>案件資料</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ApplyDate"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplyDate"
+                               class="form-control"
+                               type="date" />
+
+                        <div class="input-hint">
+                            請選擇申請日期
+                        </div>
+
+                        <span asp-validation-for="ApplyDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-3">
-            <label asp-for="ChildName" class="form-label"></label>
-            <input asp-for="ChildName" class="form-control" />
-            <span asp-validation-for="ChildName" class="text-danger"></span>
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>新生兒資料</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ChildIdNo"
+                               class="form-label"></label>
+
+                        <input asp-for="ChildIdNo"
+                               class="form-control"
+                               placeholder="例：A123456789"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <div class="input-hint">
+                            1 個大寫英文字母 + 9 位數字
+                        </div>
+
+                        <span asp-validation-for="ChildIdNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ChildName"
+                               class="form-label"></label>
+
+                        <input asp-for="ChildName"
+                               class="form-control"
+                               placeholder="請輸入新生兒姓名"
+                               maxlength="50" />
+
+                        <span asp-validation-for="ChildName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="BirthDate"
+                               class="form-label"></label>
+
+                        <input asp-for="BirthDate"
+                               class="form-control"
+                               type="date" />
+
+                        <div class="input-hint">
+                            請選擇新生兒出生日期
+                        </div>
+
+                        <span asp-validation-for="BirthDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ChildOrder"
+                               class="form-label"></label>
+
+                        <input asp-for="ChildOrder"
+                               class="form-control"
+                               type="number"
+                               min="1"
+                               max="10"
+                               placeholder="例：1" />
+
+                        <div class="input-hint">
+                            請輸入 1～10
+                        </div>
+
+                        <span asp-validation-for="ChildOrder"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-3">
-            <label asp-for="BirthDate" class="form-label"></label>
-            <input asp-for="BirthDate" class="form-control" type="date" />
-            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>設籍人資料</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ApplicantIdNo"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplicantIdNo"
+                               class="form-control"
+                               placeholder="例：A123456789"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <div class="input-hint">
+                            1 個大寫英文字母 + 9 位數字
+                        </div>
+
+                        <span asp-validation-for="ApplicantIdNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ApplicantName"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplicantName"
+                               class="form-control"
+                               placeholder="請輸入設籍人姓名"
+                               maxlength="50" />
+
+                        <span asp-validation-for="ApplicantName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ApplicantRegisterDate"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplicantRegisterDate"
+                               class="form-control"
+                               type="date" />
+
+                        <div class="input-hint">
+                            設籍日期需符合申請資格
+                        </div>
+
+                        <span asp-validation-for="ApplicantRegisterDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="ApplicantPhone"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplicantPhone"
+                               class="form-control"
+                               placeholder="例：0912345678"
+                               maxlength="20" />
+
+                        <div class="input-hint">
+                            例：0912345678
+                        </div>
+
+                        <span asp-validation-for="ApplicantPhone"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                        <label asp-for="ApplicantAddress"
+                               class="form-label"></label>
+
+                        <input asp-for="ApplicantAddress"
+                               class="form-control"
+                               placeholder="請輸入完整戶籍地址"
+                               maxlength="200" />
+
+                        <span asp-validation-for="ApplicantAddress"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-2">
-            <label asp-for="ChildOrder" class="form-label"></label>
-            <input asp-for="ChildOrder" class="form-control" />
-            <span asp-validation-for="ChildOrder" class="text-danger"></span>
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>配偶資料</strong>
+                <span class="text-muted ms-2">
+                    （非必要時可不填）
+                </span>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="SpouseIdNo"
+                               class="form-label"></label>
+
+                        <input asp-for="SpouseIdNo"
+                               class="form-control"
+                               placeholder="例：A123456789"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <div class="input-hint">
+                            1 個大寫英文字母 + 9 位數字
+                        </div>
+
+                        <span asp-validation-for="SpouseIdNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="SpouseName"
+                               class="form-label"></label>
+
+                        <input asp-for="SpouseName"
+                               class="form-control"
+                               placeholder="請輸入配偶姓名"
+                               maxlength="50" />
+
+                        <span asp-validation-for="SpouseName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="SpouseRegisterDate"
+                               class="form-label"></label>
+
+                        <input asp-for="SpouseRegisterDate"
+                               class="form-control"
+                               type="date" />
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="SpousePhone"
+                               class="form-label"></label>
+
+                        <input asp-for="SpousePhone"
+                               class="form-control"
+                               placeholder="例：0912345678"
+                               maxlength="20" />
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                        <label asp-for="SpouseAddress"
+                               class="form-label"></label>
+
+                        <input asp-for="SpouseAddress"
+                               class="form-control"
+                               placeholder="請輸入配偶戶籍地址"
+                               maxlength="200" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-5">
-            <label asp-for="ApplicantIdNo" class="form-label"></label>
-            <input asp-for="ApplicantIdNo" class="form-control" />
-            <span asp-validation-for="ApplicantIdNo" class="text-danger"></span>
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>受託人資料</strong>
+                <span class="text-muted ms-2">
+                    （非必要時可不填）
+                </span>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="AgentIdNo"
+                               class="form-label"></label>
+
+                        <input asp-for="AgentIdNo"
+                               class="form-control"
+                               placeholder="例：A123456789"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <div class="input-hint">
+                            1 個大寫英文字母 + 9 位數字
+                        </div>
+
+                        <span asp-validation-for="AgentIdNo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="AgentName"
+                               class="form-label"></label>
+
+                        <input asp-for="AgentName"
+                               class="form-control"
+                               placeholder="請輸入受託人姓名"
+                               maxlength="50" />
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="AgentPhone"
+                               class="form-label"></label>
+
+                        <input asp-for="AgentPhone"
+                               class="form-control"
+                               placeholder="例：0912345678"
+                               maxlength="20" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-5">
-            <label asp-for="ApplicantName" class="form-label"></label>
-            <input asp-for="ApplicantName" class="form-control" />
-            <span asp-validation-for="ApplicantName" class="text-danger"></span>
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>受款人與金融資料</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label asp-for="PayeeName"
+                               class="form-label"></label>
+
+                        <input asp-for="PayeeName"
+                               class="form-control"
+                               placeholder="請輸入受款人姓名"
+                               maxlength="50" />
+
+                        <span asp-validation-for="PayeeName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="PayeePhone"
+                               class="form-label"></label>
+
+                        <input asp-for="PayeePhone"
+                               class="form-control"
+                               placeholder="例：0912345678"
+                               maxlength="20" />
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="PaymentMethod"
+                               class="form-label"></label>
+
+                        <input asp-for="PaymentMethod"
+                               class="form-control"
+                               placeholder="例：匯款"
+                               maxlength="20" />
+
+                        <span asp-validation-for="PaymentMethod"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="BankCode"
+                               class="form-label"></label>
+
+                        <input asp-for="BankCode"
+                               class="form-control"
+                               placeholder="例：700"
+                               maxlength="10"
+                               inputmode="numeric" />
+
+                        <div class="input-hint">
+                            通常為 3 位銀行代碼
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="BankAccount"
+                               class="form-label"></label>
+
+                        <input asp-for="BankAccount"
+                               class="form-control"
+                               placeholder="請輸入銀行帳號"
+                               maxlength="30"
+                               inputmode="numeric"
+                               autocomplete="off" />
+
+                        <span asp-validation-for="BankAccount"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label asp-for="GrantAmount"
+                               class="form-label"></label>
+
+                        <input asp-for="GrantAmount"
+                               class="form-control"
+                               type="number"
+                               min="0"
+                               step="1"
+                               placeholder="例：30000" />
+
+                        <div class="input-hint">
+                            請輸入核發金額，單位：元
+                        </div>
+
+                        <span asp-validation-for="GrantAmount"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="col-md-3">
-            <label asp-for="ApplicantRegisterDate" class="form-label"></label>
-            <input asp-for="ApplicantRegisterDate" class="form-control" type="date" />
-            <span asp-validation-for="ApplicantRegisterDate" class="text-danger"></span>
+        <input asp-for="ReceiptOfficePhone"
+               type="hidden" />
+
+        <input asp-for="ReceiptQrText"
+               type="hidden" />
+
+        <div class="d-flex gap-2 mb-5">
+
+            <button type="submit"
+                    class="btn btn-success">
+                送出申請
+            </button>
+
+            <a asp-controller="BirthGrant"
+               asp-action="Index"
+               class="btn btn-secondary">
+                返回
+            </a>
+
         </div>
 
-        <div class="col-md-3">
-            <label asp-for="ApplicantPhone" class="form-label"></label>
-            <input asp-for="ApplicantPhone" class="form-control" />
-            <span asp-validation-for="ApplicantPhone" class="text-danger"></span>
-        </div>
-
-        <div class="col-md-6">
-            <label asp-for="ApplicantAddress" class="form-label"></label>
-            <input asp-for="ApplicantAddress" class="form-control" />
-            <span asp-validation-for="ApplicantAddress" class="text-danger"></span>
-        </div>
-
-        <hr class="mt-4" />
-
-        <div class="col-md-4">
-            <label asp-for="SpouseIdNo" class="form-label"></label>
-            <input asp-for="SpouseIdNo" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="SpouseName" class="form-label"></label>
-            <input asp-for="SpouseName" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="SpouseRegisterDate" class="form-label"></label>
-            <input asp-for="SpouseRegisterDate" class="form-control" type="date" />
-        </div>
-
-        <div class="col-md-6">
-            <label asp-for="SpousePhone" class="form-label"></label>
-            <input asp-for="SpousePhone" class="form-control" />
-        </div>
-
-        <div class="col-md-6">
-            <label asp-for="SpouseAddress" class="form-label"></label>
-            <input asp-for="SpouseAddress" class="form-control" />
-        </div>
-
-        <hr class="mt-4" />
-
-        <div class="col-md-4">
-            <label asp-for="AgentIdNo" class="form-label"></label>
-            <input asp-for="AgentIdNo" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="AgentName" class="form-label"></label>
-            <input asp-for="AgentName" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="AgentPhone" class="form-label"></label>
-            <input asp-for="AgentPhone" class="form-control" />
-        </div>
-
-        <hr class="mt-4" />
-
-        <div class="col-md-4">
-            <label asp-for="PayeeName" class="form-label"></label>
-            <input asp-for="PayeeName" class="form-control" />
-            <span asp-validation-for="PayeeName" class="text-danger"></span>
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="PayeePhone" class="form-label"></label>
-            <input asp-for="PayeePhone" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="PaymentMethod" class="form-label"></label>
-            <input asp-for="PaymentMethod" class="form-control" />
-            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="BankCode" class="form-label"></label>
-            <input asp-for="BankCode" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="BankAccount" class="form-label"></label>
-            <input asp-for="BankAccount" class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label asp-for="GrantAmount" class="form-label"></label>
-            <input asp-for="GrantAmount" class="form-control" />
-            <span asp-validation-for="GrantAmount" class="text-danger"></span>
-        </div>
-
-        <input asp-for="ReceiptOfficePhone" type="hidden" />
-        <input asp-for="ReceiptQrText" type="hidden" />
-
-        <div class="col-12 mt-4">
-            <button type="submit" class="btn btn-success">送出申請</button>
-            <a asp-action="Index" class="btn btn-secondary">返回</a>
-        </div>
     </form>
+
 </div>
 
 @section Scripts {
+
     <partial name="_ValidationScriptsPartial" />
+
 }
